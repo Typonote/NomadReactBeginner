@@ -39,10 +39,9 @@ function App() {
   if (!movies) return null;
 
   return (
-    <div>
-      <MovieCard />
+    <div className="grid grid-cols-1 lg:grid-cols-2 grid-flow-row gap-3 bg-gray-100 px-6">
       {movies.map((value) => (
-        <div>{value.title}</div>
+        <MovieCard data={value} key={value.id} />
       ))}
     </div>
   );
