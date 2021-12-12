@@ -1,6 +1,7 @@
 import "./App.css";
 import { useEffect, useState } from "react";
 import { MovieApi } from "./API/MovieApi";
+import MovieCard from "./Components/MovieCard";
 
 function App() {
   const [error, setError] = useState(null);
@@ -39,6 +40,7 @@ function App() {
 
   return (
     <div>
+      <MovieCard />
       {movies.map((value) => (
         <div>{value.title}</div>
       ))}
