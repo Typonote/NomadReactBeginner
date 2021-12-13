@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { MovieApi } from "../API/MovieApi";
+import Loading from "../Components/Loading";
 import MovieCard from "../Components/MovieCard";
 
 const Movie = () => {
@@ -14,7 +15,7 @@ const Movie = () => {
     setLoading(true);
     const MovieResponse = await MovieApi.Get_Movie("")
       .then((response) => {
-        console.log("movie", response.data.data.movies);
+        // console.log("movie", response.data.data.movies);
         setMovies(response.data.data.movies);
       })
       .catch((e) => {
@@ -28,7 +29,7 @@ const Movie = () => {
     GetMovieAPI();
   }, []);
 
-  if (loading) return <div>잠시만 기다려 주세요</div>;
+  if (loading) return <Loading />;
   if (error)
     return (
       <>
