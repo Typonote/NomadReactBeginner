@@ -1,49 +1,45 @@
-import "./App.css";
 import { useEffect, useState } from "react";
-import { MovieApi } from "./API/MovieApi";
-import MovieCard from "./Components/MovieCard";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import "./App.css";
+import Dropdown from "./Components/Dropdown";
+import Navigation from "./Components/Navigation";
+import Coin from "./Routes/Coin";
+import Home from "./Routes/Home";
+import Movie from "./Routes/Movie";
+import Todos from "./Routes/Todos";
 
 function App() {
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [movies, setMovies] = useState([]);
-
-  const GetMovieAPI = async () => {
-    // 요청이 시작 할 때 초기화
-    setError(null);
-    setMovies(null);
-    setLoading(true);
-    const MovieResponse = await MovieApi.Get_Movie("")
-      .then((response) => {
-        console.log("movie", response.data.data.movies);
-        setMovies(response.data.data.movies);
-      })
-      .catch((e) => {
-        setError(e);
-      });
-    setLoading(false);
-    return MovieResponse;
+  const [isOpen, setIsOpen] = useState(false);
+  const toggle = () => {
+    setIsOpen(!isOpen);
   };
 
   useEffect(() => {
-    GetMovieAPI();
-  }, []);
+    const hideMenu = () => {
+      if (window.innerWidth > 760 && isOpen) {
+        setIsOpen(false);
+        console.log("resize");
+      }
+    };
 
-  if (loading) return <div>잠시만 기다려 주세요</div>;
-  if (error)
-    return (
-      <>
-        <div>API 에러가 발생했습니다</div>
-      </>
-    );
-  if (!movies) return null;
+    window.addEventListener("resize", hideMenu);
+
+    return () => {
+      window.removeEventListener("resize", hideMenu);
+    };
+  });
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 grid-flow-row gap-3 bg-gray-100 px-6">
-      {movies.map((value) => (
-        <MovieCard data={value} key={value.id} />
-      ))}
-    </div>
+    <BrowserRouter>
+      <Navigation toggle={toggle} />
+      <Dropdown isOpen={isOpen} toggle={toggle} />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/movie" element={<Movie />} />
+        <Route path="/todos" element={<Todos />} />
+        <Route path="/coin" element={<Coin />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
