@@ -6,6 +6,7 @@
 
 - React
 - TailwindCSS
+- axios
 
 
 ## 📄 예시
