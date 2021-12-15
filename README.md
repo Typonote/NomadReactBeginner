@@ -1,4 +1,4 @@
-# Getting Started with Create React App
+# NomadReactBeginner
 2021 노마드 코더 ReactJS 기초 강의을 들으며 연습한 코드 <br/>
 출처: https://nomadcoders.co/react-for-beginners
 
